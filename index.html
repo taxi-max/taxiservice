@@ -3,35 +3,35 @@
 <head>
     <title>Appointment Form</title>
     <script>
-        function submitForm() {
+        async function submitForm() {
             const name = document.getElementById('name').value;
             const date = document.getElementById('date').value;
             const time = document.getElementById('time').value;
 
             if (name && date && time) {
                 // Replace 'YOUR_SCRIPT_URL' with the actual URL of your Google Apps Script
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbz6deF6qIL6QrjSkRynzDx8C3wI2DkYc0vwsmMF2jLh7cP_IMGVUZxSW0j3My-6JrM/exec';
+                const scriptURL = 'YOUR_SCRIPT_URL';
                 const data = {name, date, time};
 
-                fetch(scriptURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
-                .then(response => response.json())
-                .then(result => {
+                try {
+                    const response = await fetch(scriptURL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
                     if (result.status === 'success') {
                         alert('Form submitted successfully!');
                     } else {
                         alert('Failed to submit the form.');
                     }
-                })
-                .catch(error => {
+                } catch (error) {
                     console.error('Error:', error);
                     alert('Error submitting the form.');
-                });
+                }
             } else {
                 alert('Please fill out all fields.');
             }
