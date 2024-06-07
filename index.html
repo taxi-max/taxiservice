@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointment Form</title>
+    <script>
+        function submitForm() {
+            const name = document.getElementById('name').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            if (name && date && time) {
+                // Replace 'YOUR_SCRIPT_URL' with the actual URL of your Google Apps Script
+                const scriptURL = 'YOUR_SCRIPT_URL';
+                const data = {name, date, time};
+
+                fetch(scriptURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.status === 'success') {
+                        alert('Form submitted successfully!');
+                    } else {
+                        alert('Failed to submit the form.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error submitting the form.');
+                });
+            } else {
+                alert('Please fill out all fields.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Appointment Form</h2>
+    <form id="appointmentForm" onsubmit="event.preventDefault(); submitForm();">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="date">Date:</label><br>
+        <input type="date" id="date" name="date" required><br><br>
+        <label for="time">Time:</label><br>
+        <input type="time" id="time" name="time" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
